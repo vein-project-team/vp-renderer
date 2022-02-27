@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ECBasicOption } from 'echarts/types/dist/shared';
+import type { ECBasicOption } from 'echarts/types/dist/shared';
 import EChart from 'vue-echarts'
 
 const props = defineProps<{

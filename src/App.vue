@@ -1,33 +1,36 @@
 <script setup lang='ts'>
 import axios from 'axios'
-import { ECBasicOption } from 'echarts/types/dist/shared';
+import type { ECBasicOption } from 'echarts/types/dist/shared';
 import { reactive } from 'vue';
 import VChart from './components/VChart.vue';
 
 const dailyReportOptionGetter = async () => {
   const resp = await axios.get('/daily-report/latest')
-  console.log(resp)
+  
+  const up_down_aggregation_x: string[] = []
+  const up_down_aggregation_y: any[] = []
+  resp.data.up_down_aggregation.forEach((element: any, index: number) => {
+    up_down_aggregation_x.push(element.range)
+    up_down_aggregation_y.push({
+      value: element.count,
+      itemStyle: {
+        color: index > 10 ? `#a90000` : `#00a900`
+      }
+    })
+  })
 
   const option: ECBasicOption = reactive({
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      axisLabel: { interval: 0, rotate: 30 },
+      data: up_down_aggregation_x
     },
     yAxis: {
       type: 'value'
     },
     series: [
       {
-        data: [
-          120,
-          {
-            value: 200,
-            itemStyle: {
-              color: '#a90000'
-            }
-          },
-          150, 80, 70, 110, 130
-        ],
+        data: up_down_aggregation_y,
         type: 'bar'
       }
     ]
@@ -38,10 +41,12 @@ const dailyReportOptionGetter = async () => {
 </script>
 
 <template>
-  <div style="height:400px; width:800px;">
+  <div class="container min-h-screen mx-auto max-w-7xl">
     <suspense>
       <template #default>
-        <VChart :optionGetter="dailyReportOptionGetter" />
+        <div class="h-[500px] w-full">
+          <VChart :optionGetter="dailyReportOptionGetter" />
+        </div>
       </template>
       <template #fallback>
         <div>Loading...</div>
