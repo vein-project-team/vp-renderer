@@ -3,6 +3,7 @@ import axios from 'axios'
 import type { ECBasicOption } from 'echarts/types/dist/shared';
 import { reactive } from 'vue';
 import VChart from './components/VChart.vue';
+import GlobalHeader from './components/GlobalHeader.vue';
 
 const dailyReportOptionGetter = async () => {
   const resp = await axios.get('/daily-report/latest')
@@ -41,7 +42,8 @@ const dailyReportOptionGetter = async () => {
 </script>
 
 <template>
-  <div class="container min-h-screen mx-auto max-w-7xl">
+  <GlobalHeader />
+  <div class="container min-h-screen mx-auto max-w-7xl bg-stone-50">
     <suspense>
       <template #default>
         <div class="h-[500px] w-full">
