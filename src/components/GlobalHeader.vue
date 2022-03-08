@@ -5,7 +5,7 @@
 <template>
   <div class="header">
     <div class="float-left">
-      <span class=""></span>
+      <span class></span>
       <router-link to="/" class="header-logo">VeinProj</router-link>
     </div>
   </div>
@@ -14,7 +14,7 @@
 
 <style scoped>
 .header {
-  @apply fixed w-full h-16 bg-amber-900 px-3 py-3;
+  @apply fixed z-20 w-full h-16 bg-amber-900 px-3 py-3;
 }
 .header-logo {
   @apply text-white text-3xl font-bold;

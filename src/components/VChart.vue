@@ -2,16 +2,14 @@
 import type { ECBasicOption } from 'echarts/types/dist/shared';
 import EChart from 'vue-echarts'
 
-const props = defineProps<{
-  optionGetter: () => Promise<ECBasicOption>
+defineProps<{
+  option: ECBasicOption
 }>()
 
 
-const option = await props.optionGetter()
-
 </script>
 
-<template>
+<template>"
   <EChart :option="option" />
 </template>
 
