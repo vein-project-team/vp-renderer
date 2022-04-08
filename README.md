@@ -1,11 +1,20 @@
-# Vue 3 + Typescript + Vite
+# Vein Project: Renderer
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project is the data presentation part of the **vein project**,
 
-## Recommended IDE Setup
+## The Vein Project
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+This project aim at creating an application to provide gamut of analysis features for Chinese stock market.
 
-## Type Support For `.vue` Imports in TS
+- Python based data analysis and API services: [vp-data](https://github.com/vein-project-team/vp-data)
+- Typescript + Vue3 data presentation: [vp-renderer](https://github.com/vein-project-team/vp-renderer)
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+Current features:
+
+- data collecting: collect data from specific data source
+- data warehousing: sort and store data in local database for analysis
+- easily create new tables and fetch new data within the framework
+- automatic data update
+- data analysis framework
+- data presentation in modern webapp (early stage)
+
