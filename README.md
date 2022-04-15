@@ -28,16 +28,17 @@ Current features:
 
 ### index k-line
 
-![home page](./screenshots/index.jpg)
+![index](./screenshots/index.jpg)
 
 ### Stock list
 
-![home page](./screenshots/stock-list.jpg)
+![stock list](./screenshots/stock-list.jpg)
 
 ### Stock list search
 
-![home page](./screenshots/search.jpg)
+![stock list search](./screenshots/search.jpg)
 
 ### Stock detail
 
-![home page](./screenshots/stock-detail.jpg)
+![stock detail](./screenshots/stock.jpg)
+
