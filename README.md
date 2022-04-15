@@ -24,5 +24,5 @@ Current features:
 
 ### home page
 
-![home page](./screenshots\home.jpg)
+![home page](./screenshots/home.jpg)
 
