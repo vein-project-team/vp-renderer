@@ -18,3 +18,11 @@ Current features:
 - data analysis framework
 - data presentation in modern webapp (early stage)
 
+## Screenshots
+
+**Attention**: The project is now being refactored, some functionalities might be unavailable for a period.
+
+### home page
+
+![home page](./screenshots\home.jpg)
+
