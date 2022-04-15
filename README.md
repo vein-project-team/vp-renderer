@@ -26,3 +26,18 @@ Current features:
 
 ![home page](./screenshots/home.jpg)
 
+### index k-line
+
+![home page](./screenshots/index.jpg)
+
+### Stock list
+
+![home page](./screenshots/stock-list.jpg)
+
+### Stock list search
+
+![home page](./screenshots/search.jpg)
+
+### Stock detail
+
+![home page](./screenshots/stock-detail.jpg)
