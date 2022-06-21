@@ -9,29 +9,11 @@ const dailyReportStore = useDailyReportStore()
 
 dailyReportStore.fetchDailyReport()
 
-const upDownRank = computed(() => {
-  return dailyReportStore.upDownRank
+const stockRecords = computed(() => {
+  return dailyReportStore.getStockRecords()
 })
 
-const stockList = computed(() => {
-  return dailyReportStore.stockList
-})
-
-const stockRecords: Ref<(StockBasicInfo & StockDailyInfo)[]> = computed(() => {
-  const t: (StockBasicInfo & StockDailyInfo)[] = []
-  upDownRank.value.forEach((stockDailyInfo) => {
-    const stockBasicInfo = stockList.value.find((stockBasicInfo) => {
-      return stockBasicInfo.tsCode == stockDailyInfo.tsCode
-    })
-    t.push({
-      ...stockBasicInfo as StockBasicInfo,
-      ...stockDailyInfo
-    })
-  })
-  return t
-})
-
-const option: Ref<ECBasicOption> = computed(() => ({
+const option = computed(() => ({
   xAxis: {
     type: 'category',
     axisLabel: { interval: 0, rotate: 30 },
@@ -59,32 +41,61 @@ watch(option, () => {
 
 <template>
   <div class="container min-h-screen mx-auto max-w-7xl bg-stone-50">
-    <suspense>
-      <template #default>
-        <div>
-          <div class="h-[500px] w-full">
-            <VChart :option="option" />
-          </div>
-          <div class="w-fit h-[800px] overflow-scroll m-6 mx-auto">
-            <div v-for="stock in stockRecords" class="w-fit flex h-16 text-black text-xl p-4 hover:bg-slate-100">
-            <span class="w-28 items-center">{{ stock.tsCode }}</span>
-            <span class="w-28 items-center">{{ stock.name }}</span>
-            <span class="w-28 items-center">{{ stock.industry }}</span>
-            <span class="w-28 items-center">{{ stock.area }}</span>
-            <span class="w-28 items-center">{{ stock.open }}</span>
-            <span class="w-28 items-center">{{ stock.close }}</span>
-            <span class="w-28 items-center">{{ stock.high }}</span>
-            <span class="w-28 items-center">{{ stock.low }}</span>
-            <span class="w-28 items-center">{{ stock.preClose }}</span>
-            <span class="w-28 items-center">{{ stock.pctChange }}</span>
-          </div>
-          </div>
+    <div>
+      <div class="w-full flex h-16 text-black bg-stone-200 text-xl p-4 mt-6 mx-auto">
+        <span class="w-32 text-center font-bold">涨跌分布</span>
+      </div>
+      <div class="h-[500px] w-full">
+        <VChart :option="option" />
+      </div>
+      <div class="w-full flex h-16 text-black bg-stone-200 text-xl p-4 mt-6 mx-auto">
+        <div class="w-fit flex mx-auto">
+          <span class="w-32 text-center font-bold">代码</span>
+          <span class="w-28 text-center">名称</span>
+          <span class="w-28 text-center">行业</span>
+          <span class="w-28 text-center">地区</span>
+          <span class="w-28 text-center">开盘</span>
+          <span class="w-28 text-center">收盘</span>
+          <span class="w-28 text-center">最高</span>
+          <span class="w-28 text-center">最低</span>
+          <span class="w-28 text-center">昨收</span>
+          <span class="w-28 text-center">涨跌幅</span>
         </div>
-      </template>
-      <template #fallback>
-        <div>Loading...</div>
-      </template>
-    </suspense>
+      </div>
+      <div class="h-[800px] overflow-scroll mb-6">
+        <div v-for="stock in stockRecords" class="w-fit flex h-16 text-black text-xl p-4 hover:bg-slate-100 mx-auto">
+          <span class="w-32 text-center font-bold text-stone-400">{{ stock.tsCode }}</span>
+          <span class="w-28 text-center">{{ stock.name }}</span>
+          <span class="w-28 text-center">{{ stock.industry }}</span>
+          <span class="w-28 text-center">{{ stock.area }}</span>
+          <span v-if="stock.open > stock.preClose" class="w-28 text-center text-red-700">{{ stock.open }}</span>
+          <span v-else-if="stock.open == stock.preClose" class="w-28 text-center text-gray-700">{{ stock.open }}</span>
+          <span v-else class="w-28 text-center text-green-700">{{ stock.open }}</span>
+
+          <span v-if="stock.close > stock.preClose" class="w-28 text-center text-red-700">{{ stock.close }}</span>
+          <span v-else-if="stock.close == stock.preClose" class="w-28 text-center text-gray-700">{{ stock.close
+          }}</span>
+          <span v-else class="w-28 text-center text-green-700">{{ stock.close }}</span>
+
+          <span v-if="stock.high > stock.preClose" class="w-28 text-center text-red-700">{{ stock.high }}</span>
+          <span v-else-if="stock.high == stock.preClose" class="w-28 text-center text-gray-700">{{ stock.high }}</span>
+          <span v-else class="w-28 text-center text-green-700">{{ stock.high }}</span>
+
+          <span v-if="stock.low > stock.preClose" class="w-28 text-center text-red-700">{{ stock.low }}</span>
+          <span v-else-if="stock.low == stock.preClose" class="w-28 text-center text-gray-700">{{ stock.low }}</span>
+          <span v-else class="w-28 text-center text-green-700">{{ stock.low }}</span>
+
+          <span class="w-28 text-center text-gray-700">{{ stock.preClose }}</span>
+
+          <span v-if="stock.pctChange > 0" class="w-28 text-center text-red-700">{{ (stock.pctChange * 100).toFixed(2)
+          }}%</span>
+          <span v-else-if="stock.pctChange == 0" class="w-28 text-center text-gray-700">{{ (stock.pctChange *
+              100).toFixed(2)
+          }}%</span>
+          <span v-else class="w-28 text-center text-green-700">{{ (stock.pctChange * 100).toFixed(2) }}%</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

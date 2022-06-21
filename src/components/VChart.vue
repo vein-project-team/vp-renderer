@@ -6,7 +6,6 @@ defineProps<{
   option: ECBasicOption
 }>()
 
-
 </script>
 
 <template>"
