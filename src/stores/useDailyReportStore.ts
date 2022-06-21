@@ -35,6 +35,11 @@ type DailyReportStore = {
     y: UpDownAggregationY[]
   },
   fetchDailyReport(date?: string): void,
+  fetchStockList(date?: string): void,
+  fetchUpDownAggregation(date?: string): void,
+  fetchUpDownDetail(date?: string): void,
+  fetchUpLimits(date?: string): void,
+  fetchDownLimits(date?: string): void,
   getStockRecords(): StockRecord[]
 }
 
@@ -45,12 +50,48 @@ export const useDailyReportStore = defineStore('daily-report', (): DailyReportSt
     x: [],
     y: []
   },
-  async fetchDailyReport(date = 'latest') {
+  async fetchDailyReport() {
 
-    let resp = null
-
+    this.fetchUpDownAggregation()
+    this.fetchStockList()
+    this.fetchUpDownDetail()
+    
+  },
+  async fetchStockList(date = 'latest') {
+    const resp = await axios.get(`/stock-list/${date}`)
+    const rawStockList = resp.data
+    const stockList: StockBasicInfo[] = []
+    rawStockList.forEach((element: any) => {
+      stockList.push({
+        tsCode: element['TS_CODE'],
+        name: element['NAME'],
+        industry: element['INDUSTRY'],
+        area: element['AREA']
+      })
+    });
+    this.stockList = stockList
+  },
+  async fetchUpDownDetail(date = 'latest') {
+    // 日行情
+    const resp = await axios.get(`/up-down-rank/${date}`)
+    const rawUpDownRank = resp.data
+    const upDownRank: StockDailyInfo[] = []
+    rawUpDownRank.forEach((element: any) => {
+      upDownRank.push({
+        tsCode: element['TS_CODE'],
+        open: element['OPEN'],
+        close: element['CLOSE'],
+        high: element['HIGH'],
+        low: element['LOW'],
+        preClose: element['PRE_CLOSE'],
+        pctChange: element['PCT_CHANGE']
+      })
+    })
+    this.upDownRank = upDownRank
+  },
+  async fetchUpDownAggregation(date = 'latest') {
     // 涨跌家数
-    resp = await axios.get(`/up-down-aggregation/${date}`)
+    const resp = await axios.get(`/up-down-aggregation/${date}`)
     const rawUpDownAggregation = resp.data
     const upDownAggregationX: string[] = []
     const upDownAggregationY: any[] = []
@@ -67,48 +108,23 @@ export const useDailyReportStore = defineStore('daily-report', (): DailyReportSt
       x: upDownAggregationX,
       y: upDownAggregationY
     }
+  },
+  async fetchUpLimits(Date?) {
 
-    // 股票列表
-    resp = await axios.get(`/stock-list/${date}`)
-    const rawStockList = resp.data
-    const stockList: StockBasicInfo[] = []
-    rawStockList.forEach((element: any) => {
-      stockList.push({
-        tsCode: element['TS_CODE'],
-        name: element['NAME'],
-        industry: element['INDUSTRY'],
-        area: element['AREA']
-      })
-    });
-    this.stockList = stockList
+  },
+  async fetchDownLimits(date?) {
 
-    // 日行情
-    resp = await axios.get(`/up-down-rank/${date}`)
-    const rawUpDownRank = resp.data
-    const upDownRank: StockDailyInfo[] = []
-    rawUpDownRank.forEach((element: any) => {
-      upDownRank.push({
-        tsCode: element['TS_CODE'],
-        open: element['OPEN'],
-        close: element['CLOSE'],
-        high: element['HIGH'],
-        low: element['LOW'],
-        preClose: element['PRE_CLOSE'],
-        pctChange: element['PCT_CHANGE']
-      })
-    })
-    this.upDownRank = upDownRank
   },
   getStockRecords() {
     const stockRecords: StockRecord[] = this.upDownRank.map((stockDailyInfo) => {
-        const stockBasicInfo = this.stockList.find((stockBasicInfo) => {
-          return stockBasicInfo.tsCode == stockDailyInfo.tsCode
-        })
-        return {
-          ...stockBasicInfo as StockBasicInfo,
-          ...stockDailyInfo as StockDailyInfo
-        }
+      const stockBasicInfo = this.stockList.find((stockBasicInfo) => {
+        return stockBasicInfo.tsCode == stockDailyInfo.tsCode
+      })
+      return {
+        ...stockBasicInfo as StockBasicInfo,
+        ...stockDailyInfo as StockDailyInfo
       }
+    }
     )
     return stockRecords
   }
