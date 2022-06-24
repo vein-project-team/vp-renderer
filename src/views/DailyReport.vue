@@ -14,19 +14,37 @@ const stockRecords = computed(() => {
 })
 
 const option = computed(() => ({
+  tooltip:{
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    },
+    // formatter:function(params: any){
+    //   return '股票数量：' + params.value;
+    // }
+    
+  },
   xAxis: {
     type: 'category',
     axisLabel: { interval: 0, rotate: 30 },
-    data: dailyReportStore.upDownAggregation.x
+    data: dailyReportStore.upDownAggregation.x,
+    axisTick: {
+      alignWithLabel: true
+    }
   },
   yAxis: {
     type: 'value'
   },
   series: [
     {
+      name: '股票数量',
       data: dailyReportStore.upDownAggregation.y,
-      type: 'bar'
-    }
+      type: 'bar',
+      label:{
+        show: true,
+        position: 'top'
+      }
+    },
   ]
 }))
 
