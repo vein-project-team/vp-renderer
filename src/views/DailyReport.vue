@@ -3,7 +3,7 @@ import type { ECBasicOption } from 'echarts/types/dist/shared'
 import type { StockBasicInfo, StockDailyInfo } from '../stores/useDailyReportStore'
 import { computed, ref, Ref, watch } from 'vue'
 import VChart from '../components/VChart.vue'
-import { useDailyReportStore } from '../stores/useDailyReportStore'
+import { useDailyReportStore } from '../stores/useDailyReportStore' //不需要ts后缀
 
 const dailyReportStore = useDailyReportStore()
 
@@ -17,12 +17,12 @@ const option = computed(() => ({
   tooltip:{
     trigger: 'axis',
     axisPointer: {
-      type: 'shadow'
-    },
-    // formatter:function(params: any){
-    //   return '股票数量：' + params.value;
-    // }
-    
+      type: 'shadow',
+      
+    }, 
+    animation: true,
+    animationDuration: 1000,
+    animationDurationUpdate: 200,
   },
   xAxis: {
     type: 'category',
@@ -48,11 +48,11 @@ const option = computed(() => ({
   ]
 }))
 
-const chartKey = ref(1)
+// const chartKey = ref(1)
 
-watch(option, () => {
-  chartKey.value *= -1
-})
+// watch(option, () => {
+//   chartKey.value *= -1
+// })
 
 
 </script>

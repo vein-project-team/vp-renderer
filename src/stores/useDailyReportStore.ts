@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
 
-export type StockBasicInfo = {
+export type StockBasicInfo = { //声明类型
   tsCode: string,
   name: string,
   industry: string,
@@ -43,7 +43,7 @@ type DailyReportStore = {
   getStockRecords(): StockRecord[]
 }
 
-export const useDailyReportStore = defineStore('daily-report', (): DailyReportStore => ({
+export const useDailyReportStore = defineStore('daily-report', (): DailyReportStore => ({ //需要definestore，必须为常量，字符串为id
   stockList: [],
   upDownRank: [],
   upDownAggregation: {
