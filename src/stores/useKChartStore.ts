@@ -22,4 +22,15 @@ type KReportStore = {
 }
 
 
-export const useKReportStore = defineStore('K-Report',():  KReportStore =>)
+export const useKReportStore = defineStore('K-Report',():  KReportStore =>({
+    stockList:[],
+
+    async getStockRecords(){
+
+    },
+
+    async getAVGClose(tsCode, days){
+
+    }
+
+}))
