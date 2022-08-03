@@ -68,7 +68,7 @@ const option = computed(() => ({
       </div>
       <div class="w-full flex h-16 text-black bg-stone-200 text-xl p-4 mt-6 mx-auto">
         <div class="w-fit flex mx-auto">
-          <span class="w-32 text-center font-bold">代码</span>
+          <span class="w-28 text-center font-bold">代码</span>
           <span class="w-28 text-center">名称</span>
           <span class="w-28 text-center">行业</span>
           <span class="w-28 text-center">地区</span>

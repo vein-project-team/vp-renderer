@@ -2,6 +2,9 @@
 import type { ECBasicOption } from 'echarts/types/dist/shared';
 import EChart from 'vue-echarts'
 
+
+
+
 defineProps<{
   option: ECBasicOption
 }>()

@@ -18,19 +18,19 @@ type KReportStore = {
 
 
     getStockRecords(): StockRecord[],
-    getAVGClose(tsCode: string, days: number): number,
+    //getAVGClose(tsCode: string, days: number): number,
 }
 
 
-export const useKReportStore = defineStore('K-Report',():  KReportStore =>({
-    stockList:[],
+// export const useKReportStore = defineStore('K-Report',():  KReportStore =>({
+//     stockList:[],
 
-    async getStockRecords(){
+//     getStockRecords(){
 
-    },
+//     },
 
-    async getAVGClose(tsCode, days){
+//     // async getAVGClose(tsCode, days){
 
-    }
+//     // }
 
-}))
+// }))
