@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import * as echarts from 'echarts';
 import { computed, ref, Ref, watch } from 'vue'
 import VChart from '../components/VChart.vue'

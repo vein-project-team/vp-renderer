@@ -1,12 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
 import * as echarts from 'echarts';
 import { computed, ref, Ref, watch } from 'vue'
 
 type EChartsOption = echarts.EChartsOption;
 
 var chartDom = document.getElementById('main')!;
-var myChart = echarts.init(chartDom);
-var option: EChartsOption;
+
 
 const upColor = '#ec0000';
 const upBorderColor = '#8A0000';
@@ -99,223 +98,8 @@ function calculateMA(dayCount: number) {
   return result;
 }
 
-// function init(this: any){
-//   let myChart = this.$echarts.init(this.$refs.b)
-//   let optionline = {
-//     backgroundColor:'#f0f0f0',
-//   }
-// }
-
-// methods:{
-//   drawLine(){
-//     let myChart = this.$echarts.init(this.$refs.b)
-//     let optionline = {
-//       backgroundColor:'#f0f0f0',
-//     }
-//   }
-// }
-
-// option = 
-//   {
-//   title: {
-//     text: '上证指数',
-//     left: 0
-//   },
-//   tooltip: {
-//     trigger: 'axis',
-//     axisPointer: {
-//       type: 'cross'
-//     }
-//   },
-//   legend: {
-//     data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
-//     name:"日K"
-//   },
-//   grid: {
-//     left: '10%',
-//     right: '10%',
-//     bottom: '15%'
-//   },
-//   xAxis: {
-//     type: 'category',
-//     data: data0.categoryData,
-//     boundaryGap: false,
-//     axisLine: { onZero: false },
-//     splitLine: { show: false },
-//     min: 'dataMin',
-//     max: 'dataMax'
-//   },
-//   yAxis: {
-//     scale: true,
-//     splitArea: {
-//       show: true
-//     }
-//   },
-//   dataZoom: [
-//     {
-//       type: 'inside',
-//       start: 50,
-//       end: 100
-//     },
-//     {
-//       show: true,
-//       type: 'slider',
-//       top: '90%',
-//       start: 50,
-//       end: 100
-//     }
-//   ],
-//   series: [
-//     {
-//       name: '日K',
-//       type: 'candlestick',
-//       data: data0.values,
-//       itemStyle: {
-//         color: upColor,
-//         color0: downColor,
-//         borderColor: upBorderColor,
-//         borderColor0: downBorderColor
-//       },
-//       markPoint: {
-//         label: {
-//           formatter: function (param: any) {
-//             return param != null ? Math.round(param.value) + '' : '';
-//           }
-//         },
-//         data: [
-//           {
-//             name: 'Mark',
-//             coord: ['2013/5/31', 2300],
-//             value: 2300,
-//             itemStyle: {
-//               color: 'rgb(41,60,85)'
-//             }
-//           },
-//           {
-//             name: 'highest value',
-//             type: 'max',
-//             valueDim: 'highest'
-//           },
-//           {
-//             name: 'lowest value',
-//             type: 'min',
-//             valueDim: 'lowest'
-//           },
-//           {
-//             name: 'average value on close',
-//             type: 'average',
-//             valueDim: 'close'
-//           }
-//         ],
-//         tooltip: {
-//           formatter: function (param: any) {
-//             return param.name + '<br>' + (param.data.coord || '');
-//           }
-//         }
-//       },
-//       markLine: {
-//         symbol: ['none', 'none'],
-//         data: [
-//           [
-//             {
-//               name: 'from lowest to highest',
-//               type: 'min',
-//               valueDim: 'lowest',
-//               symbol: 'circle',
-//               symbolSize: 10,
-//               label: {
-//                 show: false
-//               },
-//               emphasis: {
-//                 label: {
-//                   show: false
-//                 }
-//               }
-//             },
-//             {
-//               type: 'max',
-//               valueDim: 'highest',
-//               symbol: 'circle',
-//               symbolSize: 10,
-//               label: {
-//                 show: false
-//               },
-//               emphasis: {
-//                 label: {
-//                   show: false
-//                 }
-//               }
-//             }
-//           ],
-//           {
-//             name: 'min line on close',
-//             type: 'min',
-//             valueDim: 'close'
-//           },
-//           {
-//             name: 'max line on close',
-//             type: 'max',
-//             valueDim: 'close'
-//           }
-//         ]
-//       }
-//     },
-//     {
-//       name: 'MA5',
-//       type: 'line',
-//       data: calculateMA(5),
-//       smooth: true,
-//       lineStyle: {
-//         opacity: 0.5
-//       }
-//     },
-//     {
-//       name: 'MA10',
-//       type: 'line',
-//       data: calculateMA(10),
-//       smooth: true,
-//       lineStyle: {
-//         opacity: 0.5
-//       }
-//     },
-//     {
-//       name: 'MA20',
-//       type: 'line',
-//       data: calculateMA(20),
-//       smooth: true,
-//       lineStyle: {
-//         opacity: 0.5
-//       }
-//     },
-//     {
-//       name: 'MA30',
-//       type: 'line',
-//       data: calculateMA(30),
-//       smooth: true,
-//       lineStyle: {
-//         opacity: 0.5
-//       }
-//     }
-//   ]
-// };
-
-//option && myChart.setOption(option);
-
-export default{
-  name:'',
-  data(){
-    return{
-
-    }
-  },
-  mounted(){
-    this.drawLine()
-  },
-  methods:{
-    drawLine(){
-      let myCharts = this.$echarts.init(this.$refs.myChartsDom)
-      myCharts.setOption({
-        title: {
+const option = computed(() => ({
+  title: {
     text: '上证指数',
     left: 0
   },
@@ -327,7 +111,7 @@ export default{
   },
   legend: {
     data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
-    name:"日K"
+    name: "日K"
   },
   grid: {
     left: '10%',
@@ -495,15 +279,15 @@ export default{
       }
     }
   ]
-      })
-    }
-  }
-}
+}))
+
+//option && myChart.setOption(option);
 
 </script>
 
 
 <template>
-  <div id="myChart" ref="'myChartsDom'" style="width: 500px;height: 500px; box-sizing:border-box; line-height: 289px;">     
+  <div class="h-[500px] w-full">
+    <VChart :option="option" />
   </div>
 </template>
