@@ -8,7 +8,7 @@ defineProps<{
 
 </script>
 
-<template>"
+<template>
   <EChart :option="option" />
 </template>
 

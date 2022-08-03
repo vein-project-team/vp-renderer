@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import * as echarts from 'echarts';
 import { computed, ref, Ref, watch } from 'vue'
+import VChart from '../components/VChart.vue'
+//type EChartsOption = echarts.EChartsOption;
 
-type EChartsOption = echarts.EChartsOption;
-
-var chartDom = document.getElementById('main')!;
-
+//var chartDom = document.getElementById('main')!;
 
 const upColor = '#ec0000';
 const upBorderColor = '#8A0000';
@@ -281,7 +280,9 @@ const option = computed(() => ({
   ]
 }))
 
-//option && myChart.setOption(option);
+
+
+
 
 </script>
 
